@@ -1,27 +1,35 @@
-import time, uuid
+import datetime, uuid
 
 
 class LogEntry:
+    NOTSET = 0
+    DEBUG = 1
+    INFO = 2
+    WARNING = 3
+    ERROR = 4
+    CRITICAL = 5
 
     def __init__(self,
                  timestamp: int,
                  message: str,
                  extended_message: str,
-                 collection: "",
+                 level: int = NOTSET,
+                 collection: str = "",
                  software: str = "",
                  version_major: int = 0,
                  version_minor: int = 0,
                  version_micro: int = 0,
                  line: int = 0,
                  file: str = "",
-                 creation_time: int = time.time_ns(),
-                 id: str = str(uuid.uuid1()),
-                 fields: dict = {}):
+                 creation_time: int = datetime.datetime.utcnow(),
+                 fields: dict = {},
+                 id: str = str(uuid.uuid1())):
         """
-        Model for LogEntry
+        Model for log entry
         :param timestamp:
         :param message:
         :param extended_message:
+        :param level
         :param collection:
         :param software:
         :param version_major:
@@ -30,8 +38,8 @@ class LogEntry:
         :param line:
         :param file:
         :param creation_time:
-        :param id:
         :param fields:
+        :param id:
         """
         self._timestamp = timestamp
         self._message = message
@@ -46,6 +54,7 @@ class LogEntry:
         self._creation_time = creation_time
         self._id = id
         self._fields = fields
+        self._level = level
 
     def get_timestamp(self) -> int:
         return self._timestamp
@@ -89,3 +98,6 @@ class LogEntry:
 
     def get_fields(self) -> dict:
         return self._fields
+
+    def get_level(self) -> int:
+        return self._level

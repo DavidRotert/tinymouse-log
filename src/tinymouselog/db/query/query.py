@@ -1,4 +1,4 @@
-def parse(query, translator):
+def translate_from_sql(query, translator):
     tokens = query.split(" ")
 
     query_obj: BaseStatement = None
@@ -16,7 +16,7 @@ def parse(query, translator):
             last_token = "SELECT"
         elif token.is_count():
             if last_token is not None:
-                raise SqlSyntaxError("Syntax error in SQL statement: Use SELECT COUNT([field]) ... .")
+                raise SqlSyntaxError("Syntax error in SQL statement: Use SELECT COUNT() ... .")
         elif token.is_delete():
             if last_token is not None:
                 raise SqlSyntaxError("Syntax error in SQL statement: Cannot use a DELETE statement behind "
@@ -26,14 +26,35 @@ def parse(query, translator):
         elif last_token in ("SELECT", "DELETE"):
             pass
 
+
 class BaseStatement:
-    pass
+    def translate(self, translator):
+        pass
+
 
 class AggregateFunction:
     pass
 
-class Select:
-    pass
+
+class Select(BaseStatement):
+    def __init__(self, table: str, fields: list = [], where=None, sort=None):
+        self._table = table
+        self._fields = fields
+        self._where = where
+        self._sort = sort
+
+    def get_table(self):
+        return self._table
+
+    def get_fields(self):
+        return self._fields
+
+    def get_where_condition(self):
+        return self._where
+
+    def get_sort(self):
+        return self._sort
+
 
 class Token:
     def __init__(self, token: str):
@@ -45,10 +66,10 @@ class Token:
 
     def is_delete(self):
         syntax = "delete"
-        return self.is_syntax(syntax)
+        return False
 
     def is_count(self):
-        syntax = "count("
+        syntax = "count()"
         return self.is_syntax(syntax)
 
     def is_syntax(self, syntax):
