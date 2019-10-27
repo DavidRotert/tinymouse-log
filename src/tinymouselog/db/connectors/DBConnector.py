@@ -4,19 +4,19 @@ class DBConnector:
         self._collection = collection
         self._args = kwargs
 
-    def insert(self, value: dict):
+    def insert(self, value: dict, database: str = None, collection: str = None):
         pass
 
-    def insert_values(self, values: list):
+    def insert_values(self, values: list, database: str = None, collection: str = None):
         pass
 
-    def select(self, query: dict = {}, fields: dict = None):
+    def select(self, query: dict = {}, fields: list = None, database: str = None, collection: str = None):
         pass
 
-    def delete(self, query: dict = {}):
+    def delete(self, query: dict = {}, database: str = None, collection: str = None):
         pass
 
-    def update(self, update: dict, query: dict = {}):
+    def update(self, update: dict, query: dict = {}, database: str = None, collection: str = None):
         pass
 
     def raw_query(self, sql: str):
