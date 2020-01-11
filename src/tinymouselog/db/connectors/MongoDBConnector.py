@@ -13,7 +13,7 @@ class MongoDBConnector(DBConnector):
         db_str = database
         col_str = collection
         if database is None:
-            if self._databse is None:
+            if self._database is None:
                 raise ValueError("Database string can not be none.")
             db_str = self._database
 
@@ -31,5 +31,4 @@ class MongoDBConnector(DBConnector):
         self._get_connection(database, collection).insert_many(values)
 
     def select(self, query: dict = {}, fields: list = None, database: str = None, collection: str = None):
-
         self._get_connection(database, collection).find(query)

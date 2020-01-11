@@ -2,7 +2,7 @@ import datetime, uuid
 
 
 class LogEntry:
-    NOTSET = 0
+    NONE = 0
     DEBUG = 1
     INFO = 2
     WARNING = 3
@@ -13,7 +13,7 @@ class LogEntry:
                  timestamp: int,
                  message: str,
                  extended_message: str,
-                 level: int = NOTSET,
+                 level: int = NONE,
                  collection: str = "",
                  software: str = "",
                  version_major: int = 0,
