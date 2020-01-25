@@ -1,13 +1,13 @@
 from flask import Flask, request
-from tinymouselog.logging.collector.logic import *
+from . import logic
 
 app = Flask(__name__)
 
 
-@app.route("/logging/<application>/logs", methods=["POST"])
-def post_log_entry(application: str):
+@app.route("/logging/logs/<collector>", methods=["POST"])
+def post_log_entry(collector: str):
     entry_data = request.get_json()
-    add_log_entry(entry_data, application)
+    logic.add_log_entry(entry_data, collector)
     return "test"
 
 
