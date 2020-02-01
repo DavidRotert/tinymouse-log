@@ -14,12 +14,12 @@ class MongoDBConnector(DBConnector.DBConnector):
         col_str = collection
         if database is None:
             if self._database is None:
-                raise ValueError("Database string can not be none.")
+                raise ValueError("Database string can not be empty.")
             db_str = self._database
 
         if collection is None:
             if self._collection is None:
-                raise ValueError("Collection string can not be none.")
+                raise ValueError("Collection string can not be empty.")
             col_str = self._collection
 
         return self._connection[db_str][col_str]
